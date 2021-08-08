@@ -7,15 +7,24 @@ CREATE DATABASE music;
 
 \c music
 
-CREATE TABLE songs
-(
-  id SERIAL PRIMARY KEY,
-  title TEXT NOT NULL,
-  duration_in_seconds INTEGER NOT NULL,
-  release_date DATE NOT NULL,
-  artists TEXT[] NOT NULL,
-  album TEXT NOT NULL,
-  producers TEXT[] NOT NULL
+CREATE TABLE "songs" (
+  "id" int PRIMARY KEY,
+  "title" text,
+  "duration_in_seconds" int,
+  "release_date" date,
+  "artist_id" int,
+  "album" text,
+  "producer_id" int
+);
+
+CREATE TABLE "artists" (
+  "id" int PRIMARY KEY,
+  "name" text
+);
+
+CREATE TABLE "producers" (
+  "id" int PRIMARY KEY,
+  "name" text
 );
 
 INSERT INTO songs
@@ -31,3 +40,8 @@ VALUES
   ('Moves Like Jagger', 201, '06-21-2011', '{"Maroon 5", "Christina Aguilera"}', 'Hands All Over', '{"Shellback", "Benny Blanco"}'),
   ('Complicated', 244, '05-14-2002', '{"Avril Lavigne"}', 'Let Go', '{"The Matrix"}'),
   ('Say My Name', 240, '11-07-1999', '{"Destiny''s Child"}', 'The Writing''s on the Wall', '{"Darkchild"}');
+
+
+ALTER TABLE "artists" ADD FOREIGN KEY ("id") REFERENCES "songs" ("artist_id");
+
+ALTER TABLE "producers" ADD FOREIGN KEY ("id") REFERENCES "songs" ("producer_id");
